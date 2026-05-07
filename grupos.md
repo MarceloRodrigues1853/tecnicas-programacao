@@ -2,23 +2,23 @@
 Joniel Rodrigues De Oliveira - TL
 Jasmine De Sá Araujo
 André Luiz Alves Da Silva
-Victoria Riso Santana
 Bruna Ribeiro
 João José Rocha De Sousa De Sousa
 
 # Team 2:
 Lucas Ribeiro Freitas - TL
-Jônatas Ferreira Da Silva
+>> Jônatas Ferreira Da Silva
 Ana Paula Alves Dos Santos
 Yasmin Serra Lino
 Adriana Santos
 
 # Team 3:
 Marcelo Dos Santos Rodrigues - TL
-Yuri Navanier Da Silva Santos
+>> Yuri Navanier Da Silva Santos
 Lívia De Fátima Silva
 Deivid Marcio Dos Santos Ferreira
-Rozvania Alcantara Da Silva
+>> Rozvania Alcantara Da Silva
+Victoria Riso Santana
 
 # Team 4:
 Lucas Silva De Deus - TL
