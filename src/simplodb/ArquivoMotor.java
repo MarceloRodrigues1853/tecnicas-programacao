@@ -51,7 +51,19 @@ public class ArquivoMotor {
      */
     public void salvar(String entidade, Long id, Object obj) throws IOException {
         // TODO Exercício 5a
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 5a");
+        // 1. Resolva o diretório da entidade
+        Path dir = diretorioBase.resolve(entidade);
+
+        // 2. Garante que o diretório existe
+        Files.createDirectories(dir);
+
+        // 3. Resolva o caminho do arquivo (ex: db/livros/1.dat)
+        Path caminho = resolverCaminho(entidade, id);
+
+        // 4 e 5. Abre o stream e serializa o objeto
+        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(caminho))) {
+            oos.writeObject(obj);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -73,7 +85,19 @@ public class ArquivoMotor {
     @SuppressWarnings("unchecked")
     public <T> Optional<T> carregar(String entidade, Long id) throws IOException, ClassNotFoundException {
         // TODO Exercício 5b
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 5b");
+        // 1. Resolva o caminho do arquivo
+        Path caminho = resolverCaminho(entidade, id);
+
+        // 2. Se o arquivo não existir, retorna um opcional vazio
+        if (Files.notExists(caminho)) {
+            return Optional.empty();
+        }
+
+        // 3, 4 e 5. Abre o stream, lê o objeto e faz o cast para o tipo T
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(caminho))) {
+            T resultado = (T) ois.readObject();
+            return Optional.of(resultado);
+        }
     }
 
     // -------------------------------------------------------------------------
