@@ -3,6 +3,8 @@ package simplodb;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Motor de persistência do SimploDB.
@@ -121,8 +123,48 @@ public class ArquivoMotor {
      */
     @SuppressWarnings("unchecked")
     public <T> List<T> carregarTodos(String entidade) throws IOException, ClassNotFoundException {
-        // TODO Exercício 4
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 4");
+
+        // 1. Resolve o diretório da entidade
+        Path dir = diretorioBase.resolve(entidade);
+
+        // 2. Se não existir, retorna lista vazia
+        if (Files.notExists(dir)) {
+            return List.of();
+        }
+
+        // 3. Files.list precisa de try-with-resources
+        try (Stream<Path> arquivos = Files.list(dir)) {
+
+            return arquivos
+
+                    // Filtra apenas arquivos .dat
+                    .filter(path -> path.toString().endsWith(".dat"))
+
+                    // 4. Extrai o ID do nome do arquivo
+                    .map(path -> {
+                        String nomeArquivo = path.getFileName().toString();
+                        Long id = Long.parseLong(nomeArquivo.replace(".dat", ""));
+                        return id;
+                    })
+
+                    // 5. Chama carregar(entidade, id)
+                    .map(id -> {
+                        try {
+                            return (Optional<T>) carregar(entidade, id);
+                        } catch (IOException | ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+
+                    // 6. Filtra Optional presentes
+                    .filter(Optional::isPresent)
+
+                    // Extrai o objeto do Optional
+                    .map(Optional::get)
+
+                    // 7. Coleta em lista
+                    .collect(Collectors.toList());
+        }
     }
 
     // -------------------------------------------------------------------------
