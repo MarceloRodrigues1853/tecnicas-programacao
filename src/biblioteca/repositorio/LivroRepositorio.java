@@ -25,25 +25,17 @@ public class LivroRepositorio extends Repositorio<Livro> {
                 .findFirst();
     }
 
-    // -------------------------------------------------------------------------
-    // TODO Exercício 3a — Streams (Módulo 3)
-    // -------------------------------------------------------------------------
-
     /**
      * Retorna todos os livros de um gênero, ordenados do mais recente para o mais antigo.
-     *
-     * Passos:
-     *   1. buscarTodos().stream()
-     *   2. .filter(l -> l.getGenero().equalsIgnoreCase(genero))
-     *   3. .sorted(Comparator.comparingInt(Livro::getAnoPublicacao).reversed())
-     *   4. .collect(Collectors.toList())
      *
      * @param genero gênero a filtrar (case-insensitive)
      * @return lista ordenada por anoPublicacao descendente
      */
     public List<Livro> buscarPorGeneroCoordenado(String genero) {
-        // TODO Exercício 3a
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 3a");
+        return buscarTodos().stream()
+                .filter(l -> l.getGenero().equalsIgnoreCase(genero))
+                .sorted(Comparator.comparingInt(Livro::getAnoPublicacao).reversed())
+                .collect(Collectors.toList());
     }
 
     // -------------------------------------------------------------------------
