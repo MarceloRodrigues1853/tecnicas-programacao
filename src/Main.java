@@ -61,47 +61,6 @@ public class Main {
         System.out.println(ana);
         System.out.println(bruno);
 
-        // ---- Testes carregarTodos ----
-        System.out.println("\n=== Teste carregarTodos() ===");
-
-        try {
-
-            System.out.println("\nAutores carregados:");
-            motor.carregarTodos("autores")
-                    .forEach(System.out::println);
-
-            System.out.println("\nLivros carregados:");
-            motor.carregarTodos("livros")
-                    .forEach(System.out::println);
-
-            System.out.println("\nUsuários carregados:");
-            motor.carregarTodos("usuarios")
-                    .forEach(System.out::println);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        // ---- Testes buscaComFiltro ----
-
-        System.out.println("\n=== Teste buscarComFiltro() ===");
-
-        System.out.println("\nLivros de Romance:");
-        livroRepo.buscarComFiltro(
-                l -> l.getGenero().equals("Romance")
-        ).forEach(System.out::println);
-
-        System.out.println("\nUsuários começando com Ana:");
-        usuarioRepo.buscarComFiltro(
-                u -> u.getNome().startsWith("Ana")
-        ).forEach(System.out::println);
-
-        System.out.println("\nLivros após 1900:");
-        livroRepo.buscarComFiltro(
-                l -> l.getAnoPublicacao() > 1900
-        ).forEach(System.out::println);
-
         // ---- Empréstimos ----
         System.out.println("\n=== Registrando empréstimos ===");
         Emprestimo e1 = biblioteca.registrarEmprestimo(ana.getId(), domCasmurro.getId());
