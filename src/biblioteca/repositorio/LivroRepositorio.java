@@ -38,21 +38,13 @@ public class LivroRepositorio extends Repositorio<Livro> {
                 .collect(Collectors.toList());
     }
 
-    // -------------------------------------------------------------------------
-    // TODO Exercício 3b — Streams (Módulo 3)
-    // -------------------------------------------------------------------------
-
     /**
      * Agrupa todos os livros por gênero.
-     *
-     * Passos:
-     *   1. buscarTodos().stream()
-     *   2. .collect(Collectors.groupingBy(Livro::getGenero))
      *
      * @return Map onde a chave é o gênero e o valor é a lista de livros daquele gênero
      */
     public Map<String, List<Livro>> agruparPorGenero() {
-        // TODO Exercício 3b
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 3b");
+        return buscarTodos().stream()
+                .collect(Collectors.groupingBy(Livro::getGenero));
     }
 }
