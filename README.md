@@ -196,7 +196,7 @@ src/
     │
     └── servico/
         ├── BibliotecaServico.java          ✏️  TODO #6 — Optional
-        └── RelatorioServico.java           ✏️  TODO #3c, #3d e #7 (bônus)
+        └── RelatorioServico.java           ☑️  DONE #3c, #3d ✏️ TODO #7 (bônus)
 ```
 
 ---
