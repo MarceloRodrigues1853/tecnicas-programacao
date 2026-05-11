@@ -190,7 +190,7 @@ src/
     │
     ├── repositorio/
     │   ├── AutorRepositorio.java           ✅ fornecido — exemplo completo
-    │   ├── LivroRepositorio.java           ✏️  TODO #3a e #3b — streams
+    │   ├── LivroRepositorio.java           ☑️ DONE #3a e #3b — streams
     │   ├── UsuarioRepositorio.java         ✅ fornecido
     │   └── EmprestimoRepositorio.java      ✅ fornecido
     │
