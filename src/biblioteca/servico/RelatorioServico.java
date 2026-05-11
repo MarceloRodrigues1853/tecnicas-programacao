@@ -29,29 +29,24 @@ public class RelatorioServico {
         this.emprestimoRepo = emprestimoRepo;
     }
 
-    // -------------------------------------------------------------------------
-    // TODO Exercício 3c — Streams (Módulo 3)
-    // -------------------------------------------------------------------------
-
     /**
      * Retorna os 5 livros mais emprestados de todos os tempos.
-     *
-     * Passos:
-     *   1. emprestimoRepo.buscarTodos().stream()
-     *   2. .collect(Collectors.groupingBy(Emprestimo::getLivroId, Collectors.counting()))
-     *      → produz Map<Long, Long>: livroId → quantidade de empréstimos
-     *   3. .entrySet().stream()
-     *   4. .sorted(Map.Entry.<Long, Long>comparingByValue().reversed())
-     *   5. .limit(5)
-     *   6. .map(entry -> livroRepo.buscarPorId(entry.getKey()))
-     *   7. .filter(Optional::isPresent).map(Optional::get)
-     *   8. .collect(Collectors.toList())
      *
      * @return lista de até 5 livros, do mais para o menos emprestado
      */
     public List<Livro> top5LivrosMaisEmprestados() {
-        // TODO Exercício 3c
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 3c");
+        return emprestimoRepo.buscarTodos().stream()
+                .collect(Collectors.groupingBy(
+                        Emprestimo::getLivroId,
+                        Collectors.counting()
+                ))
+                .entrySet().stream()
+                .sorted(Map.Entry.<Long, Long>comparingByValue().reversed())
+                .limit(5)
+                .map(entry -> livroRepo.buscarPorId(entry.getKey()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     // -------------------------------------------------------------------------
