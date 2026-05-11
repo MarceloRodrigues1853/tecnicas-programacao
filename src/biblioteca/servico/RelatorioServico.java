@@ -49,28 +49,20 @@ public class RelatorioServico {
                 .collect(Collectors.toList());
     }
 
-    // -------------------------------------------------------------------------
-    // TODO Exercício 3d — Streams (Módulo 3)
-    // -------------------------------------------------------------------------
-
     /**
      * Retorna o total de multas pendentes agrupado por usuário.
      * Considera apenas empréstimos atrasados e ainda não devolvidos.
      *
-     * Passos:
-     *   1. emprestimoRepo.buscarTodos().stream()
-     *   2. .filter(e -> e.estaAtrasado())
-     *   3. .collect(Collectors.toMap(
-     *          Emprestimo::getUsuarioId,
-     *          Emprestimo::calcularMulta,
-     *          BigDecimal::add          ← merge: soma quando o mesmo usuário aparece mais de uma vez
-     *      ))
-     *
      * @return Map<Long, BigDecimal> de usuarioId → soma das multas pendentes
      */
     public Map<Long, BigDecimal> multasPendentesPorUsuario() {
-        // TODO Exercício 3d
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 3d");
+        return emprestimoRepo.buscarTodos().stream()
+                .filter(e -> e.estaAtrasado())
+                .collect(Collectors.toMap(
+                        Emprestimo::getUsuarioId,
+                        Emprestimo::calcularMulta,
+                        BigDecimal::add
+                ));
     }
 
     // -------------------------------------------------------------------------
