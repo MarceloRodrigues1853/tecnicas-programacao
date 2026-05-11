@@ -3,7 +3,9 @@ package biblioteca.modelo;
 import simplodb.Persistivel;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Emprestimo implements Persistivel {
@@ -68,7 +70,10 @@ public class Emprestimo implements Persistivel {
      */
     public boolean estaAtrasado() {
         // TODO Exercício 1a
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 1a");
+
+        return dataDevolvido == null &&
+                dataDevolucaoPrevista != null && // caso dataDevolucao seja null, evita exception error
+                LocalDateTime.now().isAfter(dataDevolucaoPrevista);
     }
 
     // -------------------------------------------------------------------------
@@ -94,7 +99,16 @@ public class Emprestimo implements Persistivel {
      */
     public BigDecimal calcularMulta() {
         // TODO Exercício 1b
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 1b");
+
+        if (!estaAtrasado()){
+            return BigDecimal.ZERO;
+        }
+
+        LocalDateTime referencia = isDevolvido() ? dataDevolvido : LocalDateTime.now();
+
+        long dias = ChronoUnit.DAYS.between(dataDevolucaoPrevista, referencia);
+
+        return MULTA_POR_DIA.multiply(BigDecimal.valueOf(dias));
     }
 
     // -------------------------------------------------------------------------
@@ -124,6 +138,28 @@ public class Emprestimo implements Persistivel {
     @Override
     public String toString() {
         // TODO Exercício 1c
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 1c");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        String mensagem =
+                "Empréstimo #" + id +
+                        " | Livro: " + livroId +
+                        " | Usuário: " + usuarioId +
+                        " | Vence: " + dataDevolucaoPrevista.format(formatter);
+
+        if (isDevolvido()) {
+            return mensagem +
+                    " | Devolvido: " +
+                    dataDevolvido.format(formatter);
+        }
+
+        if (estaAtrasado()) {
+            return mensagem +
+                    " | ATRASADO | Multa: R$ " +
+                    String.format("%.2f", calcularMulta());
+        }
+
+        return mensagem;
+
     }
 }

@@ -62,7 +62,23 @@ public class BibliotecaServico {
      */
     public Emprestimo registrarEmprestimo(Long usuarioId, Long livroId) {
         // TODO Exercício 6
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 6");
+        usuarioRepo.buscarPorId(usuarioId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + usuarioId));
+
+        livroRepo.buscarPorId(livroId)
+                .orElseThrow(() -> new IllegalArgumentException("Livro não encontrado: " + livroId));
+
+        if (!validarLimiteEmprestimos(usuarioId)) {
+            throw new IllegalStateException(
+                    "Limite de empréstimos atingido para o usuário: " + usuarioId);
+        }
+
+        emprestimoRepo.buscarAbertos().stream()
+                .filter(e -> e.getLivroId().equals(livroId))
+                .findFirst()
+                .ifPresent(e -> { throw new IllegalStateException("Livro já está emprestado: " + livroId);});
+
+        return emprestimoRepo.salvar(new Emprestimo(usuarioId, livroId));
     }
 
     // -------------------------------------------------------------------------
