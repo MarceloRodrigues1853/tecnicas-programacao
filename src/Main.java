@@ -52,6 +52,8 @@ public class Main {
         System.out.println(domCasmurro);
         System.out.println(horaEstrela);
         System.out.println(memorias);
+        System.out.println(sentimento);
+        System.out.println(perto);
 
         System.out.println("\n=== Cadastrando usuários ===");
         Usuario ana    = usuarioRepo.salvar(new Usuario("Ana Silva", "ana@email.com", "111.222.333-44", LocalDate.now()));

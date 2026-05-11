@@ -139,7 +139,9 @@ public abstract class Repositorio<T extends Persistivel> {
      * @return lista dos elementos que passam no filtro
      */
     public List<T> buscarComFiltro(Predicate<T> filtro) {
-        // TODO Exercício 2
-        throw new UnsupportedOperationException("Não implementado — veja TODO Exercício 2");
+        return buscarTodos()
+                .stream()
+                .filter(filtro)
+                .collect(Collectors.toList());
     }
 }
